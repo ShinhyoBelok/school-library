@@ -1,6 +1,6 @@
 require './person'
 
-class Teacher < person
+class Teacher < Person
   attr_accessor :specialization
 
   def initialize(specialization, age, name = 'unknown')

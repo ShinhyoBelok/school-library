@@ -82,9 +82,8 @@ Clone this repository to your desired folder:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] **Add books.**
-- [ ] **Add new students or teachers.**
-- [ ] **Save records of who borrowed a given book and when.**
+- [ ] **Save data**
+- [ ] **Add decorator**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
