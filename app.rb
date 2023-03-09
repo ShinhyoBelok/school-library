@@ -22,13 +22,23 @@ class App
   end
 
   def add_rental(date, book_index, person_index)
-    rental = Rental.new(date, @list_of_books[book_index], @list_of_people[person_index])
+    rental = Rental.new(date, @list_of_books[book_index.to_i], @list_of_people[person_index.to_i])
     @list_of_rentals << rental
   end
 
   def add_book(title, author)
     new_book = Book.new(title, author)
     @list_of_books << new_book
+  end
+
+  def create_book
+    puts "\n*- Create a book -*"
+    print "Title: "
+    title = gets.chomp
+    print "Author: "
+    author = gets.chomp
+    add_book(title, author)
+    puts "\nBook successfully created"
   end
 
   def create_person
@@ -67,57 +77,52 @@ class App
   end
 
   def create_rental
-    puts "*- Create rental -*"
-    puts "Select a book from the following list by number"
-    display_list_of_books
-    print "Select a book: "
+    puts "\n*- Create rental -*"
+    puts "\nSelect a book from the following list by number"
+    display_list_of_books()
+    print "\nSelect a book: "
     book_index = gets.chomp
     puts "Select a person from the following list by number (not id)"
-    display_list_of_people
-    print "Select a person: "
+    display_list_of_people()
+    print "\nSelect a person: "
     person_index = gets.chomp
-    puts "Date [yyyy/mm/dd]: "
+    print "Date [yyyy/mm/dd]: "
     date = gets.chomp
     add_rental(date, book_index, person_index)
+    puts "\nRental successfully created"
   end
 
   def display_list_of_books
+    puts "\n*- Books -*"
     @list_of_books.each_with_index do |book, index|
       puts "#{index} - Title: #{book.title}, Author: #{book.author}"
     end
   end
 
   def display_list_of_people
+    puts "\n*- People -*"
     @list_of_people.each_with_index do |person, index|
       puts "#{index} - [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
   end
 
   def display_list_of_rentals(id)
-    filter_list = @list_of_rentals.select { |rental| rental.person.id == id }
+    filter_list = @list_of_rentals.select { |rental| rental.person.id == id.to_i }
+    puts "\n*- Rentals -*"
     filter_list.each_with_index do |rental, index|
-      puts "#{index} - #{rental.person.name}: Date: #{rental.date}, Book: #{rental.book.title}"
+      puts "#{index} - [#{rental.person.name}] Date: #{rental.date}, Book: #{rental.book.title}"
     end
   end
 
   def list_of_rentals_by_id
-    puts "*- Rentals list by ID -*"
-    print "Want to see the list of people to check the ID [Y/N]: "
+    puts "\n*- Rentals list by ID -*"
+    print "Do you want to see the list of people to check the ID [Y/N]: "
     list_people = gets.chomp.downcase
     if list_people == 'y'
-      display_list_of_people
+      display_list_of_people()
     end
     print "ID of person: "
     id = gets.chomp
     display_list_of_rentals(id)
   end
 end
-
-# app = App.new()
-# app.add_book("game of thones", "author")
-# app.add_book("game of hunger", "author")
-# app.add_book("game of games", "author")
-# app.create_rental
-# app.add_student("Math 001", 21, "Shinhyo")
-# app.add_teacher("Math", 33, "Juan")
-# app.display_list_of_people
