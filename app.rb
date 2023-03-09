@@ -92,13 +92,32 @@ class App
       puts "#{index} - [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
   end
+
+  def display_list_of_rentals(id)
+    filter_list = @list_of_rentals.select { |rental| rental.person.id == id }
+    filter_list.each_with_index do |rental, index|
+      puts "#{index} - #{rental.person.name}: Date: #{rental.date}, Book: #{rental.book.title}"
+    end
+  end
+
+  def list_of_rentals_by_id
+    puts "*- Rentals list by ID -*"
+    print "Want to see the list of people to check the ID [Y/N]: "
+    list_people = gets.chomp.downcase
+    if list_people == 'y'
+      display_list_of_people
+    end
+    print "ID of person: "
+    id = gets.chomp
+    display_list_of_rentals(id)
+  end
 end
 
-app = App.new()
-app.add_book("game of thones", "author")
-app.add_book("game of hunger", "author")
-app.add_book("game of games", "author")
-app.create_rental
+# app = App.new()
+# app.add_book("game of thones", "author")
+# app.add_book("game of hunger", "author")
+# app.add_book("game of games", "author")
+# app.create_rental
 # app.add_student("Math 001", 21, "Shinhyo")
 # app.add_teacher("Math", 33, "Juan")
 # app.display_list_of_people
