@@ -21,12 +21,12 @@ class App
     @list_of_people << teacher
   end
 
-  def add_rental(date, book, person)
-    rental = Rental.new(date, book, person)
+  def add_rental(date, book_index, person_index)
+    rental = Rental.new(date, @list_of_books[book_index], @list_of_people[person_index])
     @list_of_rentals << rental
   end
 
-  def create_book(title, author)
+  def add_book(title, author)
     new_book = Book.new(title, author)
     @list_of_books << new_book
   end
@@ -68,24 +68,37 @@ class App
 
   def create_rental
     puts "*- Create rental -*"
-    print ""
-    (date, book, person)
+    puts "Select a book from the following list by number"
+    display_list_of_books
+    print "Select a book: "
+    book_index = gets.chomp
+    puts "Select a person from the following list by number (not id)"
+    display_list_of_people
+    print "Select a person: "
+    person_index = gets.chomp
+    puts "Date [yyyy/mm/dd]: "
+    date = gets.chomp
+    add_rental(date, book_index, person_index)
   end
 
   def display_list_of_books
     @list_of_books.each_with_index do |book, index|
-      puts "#{index + 1} - Title: #{book.title}, Author: #{book.author}"
+      puts "#{index} - Title: #{book.title}, Author: #{book.author}"
     end
   end
 
   def display_list_of_people
     @list_of_people.each_with_index do |person, index|
-      puts "#{index + 1} - [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index} - [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
   end
 end
 
 app = App.new()
+app.add_book("game of thones", "author")
+app.add_book("game of hunger", "author")
+app.add_book("game of games", "author")
+app.create_rental
 # app.add_student("Math 001", 21, "Shinhyo")
 # app.add_teacher("Math", 33, "Juan")
 # app.display_list_of_people
