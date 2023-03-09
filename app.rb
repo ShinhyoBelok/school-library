@@ -5,6 +5,7 @@ require './rental'
 
 class App
   attr_accessor :list_of_books
+
   def initialize
     @list_of_books = []
     @list_of_people = []
@@ -33,45 +34,51 @@ class App
 
   def create_book
     puts "\n*- Create a book -*"
-    print "Title: "
+    print 'Title: '
     title = gets.chomp
-    print "Author: "
+    print 'Author: '
     author = gets.chomp
     add_book(title, author)
     puts "\nBook successfully created"
   end
 
+  def student_case
+    print 'Name: '
+    name = gets.chomp.capitalize
+    print 'Age: '
+    age = gets.chomp
+    print 'Classroom: '
+    classroom = gets.chomp.capitalize
+    add_student(classroom, age, name)
+  end
+
+  def teacher_case
+    print 'Name: '
+    name = gets.chomp.capitalize
+    print 'Age: '
+    age = gets.chomp
+    print 'Specialization: '
+    specialization = gets.chomp.capitalize
+    add_teacher(specialization, age, name)
+  end
+
   def create_person
     correct_type = false
-    while !correct_type
-      print "Create a student (1) or a teacher (2)? [input the number]: "
+    until correct_type
+      print 'Create a student (1) or a teacher (2)? [input the number]: '
       person_type = gets.chomp
-  
+
       case person_type
       when '1'
-        print "Name: "
-        name = gets.chomp.capitalize
-        print "Age: "
-        age = gets.chomp
-        print "Classroom: "
-        classroom = gets.chomp.capitalize
-
-        add_student(classroom, age, name)
+        student_case
         correct_type = true
         puts "\nStudent created successfully!"
       when '2'
-        print "Name: "
-        name = gets.chomp.capitalize
-        print "Age: "
-        age = gets.chomp
-        print "Specialization: "
-        specialization = gets.chomp.capitalize
-
-        add_teacher(specialization, age, name)
+        teacher_case
         correct_type = true
         puts "\nTeacher created successfully!"
       else
-        puts "Wrong input, please select between 1 or 2 for student or teacher"
+        puts 'Wrong input, please select between 1 or 2 for student or teacher'
       end
     end
   end
@@ -79,14 +86,14 @@ class App
   def create_rental
     puts "\n*- Create rental -*"
     puts "\nSelect a book from the following list by number"
-    display_list_of_books()
+    display_list_of_books
     print "\nSelect a book: "
     book_index = gets.chomp
-    puts "Select a person from the following list by number (not id)"
-    display_list_of_people()
+    puts 'Select a person from the following list by number (not id)'
+    display_list_of_people
     print "\nSelect a person: "
     person_index = gets.chomp
-    print "Date [yyyy/mm/dd]: "
+    print 'Date [yyyy/mm/dd]: '
     date = gets.chomp
     add_rental(date, book_index, person_index)
     puts "\nRental successfully created"
@@ -116,12 +123,10 @@ class App
 
   def list_of_rentals_by_id
     puts "\n*- Rentals list by ID -*"
-    print "Do you want to see the list of people to check the ID [Y/N]: "
+    print 'Do you want to see the list of people to check the ID [Y/N]: '
     list_people = gets.chomp.downcase
-    if list_people == 'y'
-      display_list_of_people()
-    end
-    print "ID of person: "
+    display_list_of_people if list_people == 'y'
+    print 'ID of person: '
     id = gets.chomp
     display_list_of_rentals(id)
   end
