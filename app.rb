@@ -23,7 +23,7 @@ class App
   end
 
   def add_rental(date, book_index, person_index)
-    rental = Rental.new(date, @list_of_books[book_index.to_i], @list_of_people[person_index.to_i])
+    rental = Rental.new(date, @list_of_books, @list_of_people)
     @list_of_rentals << rental
   end
 
